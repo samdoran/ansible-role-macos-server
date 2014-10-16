@@ -21,6 +21,8 @@ Role Variables
 
 **osxs_serveradmin**    Hash of commands sent to `serveradmin` command.
 
+**osxs_packages**       List of packages to be installed with Homebrew.
+
 
 Dependencies
 ------------

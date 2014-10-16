@@ -3,6 +3,17 @@ osxs_timeserver: time.apple.com
 osxs_servername: osxs-1
 osxs_timezone: GMT
 
+osxs_packages:
+  - fish
+  - htop
+  - coreutils
+  - iperf
+  - nmap
+  - ssh-copy-id
+  - watch
+  - wget
+  - git
+
 osxs_systemsetup:
   timezone:
     arg: "{{ osxs_timezone }}"
