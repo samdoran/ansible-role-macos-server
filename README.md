@@ -12,7 +12,15 @@ Requirements
 
 Role Variables
 --------------
+**osxs_servername**     Name of the server (not FQDN).
 
+**osxs_timeserver**     FQDN of time server.
+
+**osxs_timezone**       Timezone of time server (Default: GMT)
+
+**osxs_systemsetup**    Hash of commands and parameters sent to `systemsetup` command.
+
+**osxs_serveradmin**    Hash of commands sent to `serveradmin` command.
 
 
 Dependencies

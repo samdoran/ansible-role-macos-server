@@ -6,16 +6,15 @@
 
 - name: Setup system
   command: systemsetup -set{{ item.key }} {{ item.value.arg }}
-  with_dict: systemsetup
+  with_dict: osxs_systemsetup
 
 - name: Configure server services
   command: serveradmin {{ item.value.arg }} {{ item.key }}
-  with_dict: serveradmin
+  with_dict: osxs_serveradmin
 
 - name: Configure services
-  command: serveradmin settings {{ item.value.settings }} {{ item.key }}
-  with_dict: serveradmin
-  when: item.vaulue.settings is defined
+  command: serveradmin settings {{ item.value.arg }} {{ item.key }}
+  with_dict: osxs_serveradmin
   tags: test
 
 # - name: Firewall rules

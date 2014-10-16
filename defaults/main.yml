@@ -1,13 +1,17 @@
 ---
-systemsetup:
+osxs_timeserver: time.apple.com
+osxs_servername: osxs-1
+osxs_timezone: GMT
+
+osxs_systemsetup:
   timezone:
-    arg: "GMT"
+    arg: "{{ osxs_timezone }}"
 
   usingnetworktime:
     arg: "on"
 
   networktimeserver:
-    arg: ntp1.royall.com
+    arg: "{{ osxs_timeserver }}"
 
   computersleep:
     arg: "Never"
@@ -31,12 +35,12 @@ systemsetup:
     arg: "on"
 
   computername:
-    arg: "{{ hostname }}"
+    arg: "{{ osxs_servername }}"
 
   localsubnetname:
-    arg: "{{ hostname }}"
+    arg: "{{ osxs_servername }}"
 
 
-serveradmin:
+osxs_serveradmin:
   caching:
     arg: start
