@@ -8,7 +8,6 @@ Requirements
 
 * SSH access to the server
 * `sudo` privileges
-* `homebrew` installed before running
 
 Role Variables
 --------------
