@@ -1,5 +1,5 @@
 ---
-- name: Check if homebrew is installed
+- name: Check if Homebrew is installed
   stat: path=/usr/local/bin/brew
   register: homebrew_check
 
@@ -21,7 +21,8 @@
   command: /Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin {{ item.value.arg }} {{ item.key }}
   with_dict: osxs_serveradmin
 
-# - name: Firewall rules
+- name: Enable firewall
+  command: defaults write /Library/Preferences/com.apple.alf.plist globalstate -int 1
 
 - name: Setup sudo for admin group
   lineinfile: "state=present backup=yes dest=/etc/sudoers regexp='^%admin' line='%admin  ALL=(ALL) NOPASSWD: ALL'"
