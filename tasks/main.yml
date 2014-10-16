@@ -1,22 +1,25 @@
 ---
-- name: Make sure homebrew is installed
+- name: Check if homebrew is installed
   stat: path=/usr/local/bin/brew
   register: homebrew_check
-  failed_when: not homebrew_check.stat.exists
+
+- name: Install Homebrew
+  shell: 'echo "\r" | ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
+  sudo: no
+  when: not homebrew_check.stat.exists
+
+- name: Install packages
+  homebrew: update_homebrew=yes upgrade_all=yes name={{ item }} state=latest
+  sudo: no
+  with_items: osxs_packages
 
 - name: Setup system
-  command: systemsetup -set{{ item.key }} {{ item.value.arg }}
-  with_dict: systemsetup
+  command: /usr/sbin/systemsetup -set{{ item.key }} {{ item.value.arg }}
+  with_dict: osxs_systemsetup
 
 - name: Configure server services
-  command: serveradmin {{ item.value.arg }} {{ item.key }}
-  with_dict: serveradmin
-
-- name: Configure services
-  command: serveradmin settings {{ item.value.settings }} {{ item.key }}
-  with_dict: serveradmin
-  when: item.vaulue.settings is defined
-  tags: test
+  command: /Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin {{ item.value.arg }} {{ item.key }}
+  with_dict: osxs_serveradmin
 
 # - name: Firewall rules
 

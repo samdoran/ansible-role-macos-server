@@ -8,11 +8,20 @@ Requirements
 
 * SSH access to the server
 * `sudo` privileges
-* `homebrew` installed before running
 
 Role Variables
 --------------
+**osxs_servername**     Name of the server (not FQDN).
 
+**osxs_timeserver**     FQDN of time server.
+
+**osxs_timezone**       Timezone of time server (Default: GMT)
+
+**osxs_systemsetup**    Hash of commands and parameters sent to `systemsetup` command.
+
+**osxs_serveradmin**    Hash of commands sent to `serveradmin` command.
+
+**osxs_packages**       List of packages to be installed with Homebrew.
 
 
 Dependencies
