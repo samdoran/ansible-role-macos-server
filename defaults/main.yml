@@ -1,2 +1,42 @@
 ---
-# defaults file for osx_server
+systemsetup:
+  timezone:
+    arg: "GMT"
+
+  usingnetworktime:
+    arg: "on"
+
+  networktimeserver:
+    arg: ntp1.royall.com
+
+  computersleep:
+    arg: "Never"
+
+  displaysleep:
+    arg: 15
+
+  harddisksleep:
+    arg: "Never"
+
+  wakeonnetworkaccess:
+    arg: "on"
+
+  restartpowerfailure:
+    arg: "on"
+
+  allowpowerbuttontosleepcomputer:
+    arg: "off"
+
+  remotelogin:
+    arg: "on"
+
+  computername:
+    arg: "{{ hostname }}"
+
+  localsubnetname:
+    arg: "{{ hostname }}"
+
+
+serveradmin:
+  caching:
+    arg: start

@@ -1,2 +1,3 @@
 ---
-# handlers file for osx_server
+- name: restart ssh
+  shell: launchctl stop com.openssh.sshd ; launchctl start com.openssh.sshd

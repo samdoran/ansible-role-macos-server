@@ -1,2 +1,31 @@
 ---
-# tasks file for osx_server
+- name: Make sure homebrew is installed
+  stat: path=/usr/local/bin/brew
+  register: homebrew_check
+  failed_when: not homebrew_check.stat.exists
+
+- name: Setup system
+  command: systemsetup -set{{ item.key }} {{ item.value.arg }}
+  with_dict: systemsetup
+
+- name: Configure server services
+  command: serveradmin {{ item.value.arg }} {{ item.key }}
+  with_dict: serveradmin
+
+- name: Configure services
+  command: serveradmin settings {{ item.value.settings }} {{ item.key }}
+  with_dict: serveradmin
+  when: item.vaulue.settings is defined
+  tags: test
+
+# - name: Firewall rules
+
+- name: Setup sudo for admin group
+  lineinfile: "state=present backup=yes dest=/etc/sudoers regexp='^%admin' line='%admin  ALL=(ALL) NOPASSWD: ALL'"
+
+- name: Copy /etc/issue
+  copy: src=issue dest=/etc/issue owner=root group=wheel mode=0644
+
+- name: Configure ssh
+  template: backup=yes src=sshd_config.j2 dest=/etc/sshd_config owner=root group=wheel mode=0644
+  notify: restart ssh
