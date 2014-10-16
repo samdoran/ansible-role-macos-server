@@ -32,11 +32,16 @@ Dependencies
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+    - name: OS X Server
+      hosts: osx_server
+      sudo: yes
 
-    - hosts: servers
+      vars:
+        osxs_servername: xserv-1
+        osxs_timeserver: ntp.acme.com
+
       roles:
-         - { role: username.rolename, x: 42 }
+        - osx_server
 
 License
 -------
