@@ -10,6 +10,7 @@ osxs_packages:
   - iperf
   - nmap
   - ssh-copy-id
+  - tmux
   - watch
   - wget
   - git
