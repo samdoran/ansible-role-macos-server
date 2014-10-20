@@ -11,6 +11,8 @@ Requirements
 
 Role Variables
 --------------
+**osxs_loginbanner**    Text displayed on login screen. (Default: undefined)
+
 **osxs_servername**     Name of the server (not FQDN).
 
 **osxs_timeserver**     FQDN of time server.
