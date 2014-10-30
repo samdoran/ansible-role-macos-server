@@ -17,9 +17,10 @@
   command: /usr/sbin/systemsetup -set{{ item.key }} {{ item.value.arg }}
   with_dict: osxs_systemsetup
 
-- name: Configure server services
-  command: /Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin {{ item.value.arg }} {{ item.key }}
+- name: Configure OS X Server services
+  osx_serveradmin: name={{ item.key }} state={{ item.value.state }}
   with_dict: osxs_serveradmin
+  tags: [ 'test' ]
 
 - name: Enable firewall
   command: defaults write /Library/Preferences/com.apple.alf.plist globalstate -int 1
