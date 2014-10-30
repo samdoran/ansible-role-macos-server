@@ -1,0 +1,55 @@
+#!/usr/bin/python
+
+DOCUMENTATION = '''
+---
+module: osx_serveradmin
+version_added: "1.8"
+short_description: Manage OS X Server processes
+description:
+    - This is a wrapper for the serveradmin command line tool on OS X Server.
+'''
+
+EXAMPLES = '''
+
+'''
+
+def main():
+    module = AnsibleModule (
+        argument_spec = dict (
+            name = dict(required=True, type='str'),
+            state = dict(required=True, choices=['started', 'stopped']),
+            # settings = dict(),
+            # commands = dict(),
+        ),
+        supports_check_mode = True
+    )
+
+    name = module.params['name']
+    state = module.params['state']
+
+    # Hash for translating input states to arguments for the serveradmin
+    # command line tool
+    states = {"started": "start", "stopped": "stop"}
+    state_out = {"started": "RUNNING", "stopped": "STOPPED"}
+
+    # Check status
+    cmd = "serveradmin status %s" % (name)
+    (rc, out, err) = module.run_command(cmd)
+    if rc != 0:
+        module.fail_json(msg=err, rc=rc, cmd=cmd, out=out)
+
+    # Idempontent logic
+    if state_out[state] in out:
+        module.exit_json(changed=False)
+
+    cmd = "serveradmin %s %s" % (states[state], name)
+
+    (rc, out, err) = module.run_command(cmd)
+    if rc != 0:
+        module.fail_json(msg=err, rc=rc, cmd=cmd, out=out)
+    else:
+        module.exit_json(changed=True)
+
+# import module snippets
+from ansible.module_utils.basic import *
+main()

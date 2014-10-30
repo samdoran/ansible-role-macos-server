@@ -1,0 +1,34 @@
+#!/usb/bin/python
+
+DOCUMENTATION = '''
+---
+module: osx_user
+version_added: "1.8"
+short_description: Manage user accounts on OS X
+description:
+    -
+notes:
+    -
+
+author: Sam Doran
+'''
+
+EXAMPLES = '''
+
+'''
+
+def main():
+    module = AnsibleModule (
+        argument_spec = dict (
+            state=dict(default='present', choices=['present', 'absent'], type='str'),
+            name = dict(required=True, aliases=['user'], type='str'),
+            group = dict(default=None, type='str'),
+            groups = dict(default=None, type='str'),
+        ),
+        supports_check_mode = True
+    )
+
+    state =
+    name =
+    group =
+    groups =
