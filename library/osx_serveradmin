@@ -6,7 +6,26 @@ module: osx_serveradmin
 version_added: "1.8"
 short_description: Manage OS X Server processes
 description:
-    - This is a wrapper for the serveradmin command line tool on OS X Server.
+    - Manage OS X Server processes and settings.
+options:
+    name:
+        required: true
+        description:
+            - Name of the service.
+    state:
+        required: false
+        description:
+            - Optionally start/enabled or stop/disable the service. OS X does
+              have separate settings for enabling and starting/stopping.
+        choices: [ "started", "stopped" ]
+    setting_key:
+        required: false
+        description:
+            - Name of the setting. These vary per service.
+    setting_value:
+        required: false
+        description:
+            - Value that will be assigned to setting_key.
 '''
 
 EXAMPLES = '''
@@ -18,8 +37,8 @@ def main():
         argument_spec = dict (
             name = dict(required=True, type='str'),
             state = dict(required=True, choices=['started', 'stopped']),
-            # settings = dict(),
-            # commands = dict(),
+            setting_key = dict(required=False, type='str'),
+            setting_value = dict(required=False, type='str'),
         ),
         supports_check_mode = True
     )
@@ -38,16 +57,29 @@ def main():
     if rc != 0:
         module.fail_json(msg=err, rc=rc, cmd=cmd, out=out)
 
-    # Idempontent logic
+    # Idempontent logic for starting or stopping the service
     if state_out[state] in out:
         module.exit_json(changed=False)
 
     cmd = "serveradmin %s %s" % (states[state], name)
-
     (rc, out, err) = module.run_command(cmd)
+
     if rc != 0:
         module.fail_json(msg=err, rc=rc, cmd=cmd, out=out)
     else:
+        module.exit_json(changed=True)
+
+    # Pass service settings to the command
+
+    # Check the setting to see if it needs to be changed
+    cmd = "serveradmin settings %s:%s:" % (name, setting_key)
+    (rc, out, err) = module.run_command(cmd)
+
+    if rc != 0:
+        module.fail_json(msg=err, rc=rc, cmd=cmd, out=out)
+    else:
+        cmd = "serveradmin settings %s:%s = %s" % (name, setting_key, setting_value)
+        (rc, out, err) = module.run_command(cmd)
         module.exit_json(changed=True)
 
 # import module snippets
