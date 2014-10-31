@@ -17,9 +17,9 @@
   command: /usr/sbin/systemsetup -set{{ item.key }} {{ item.value.arg }}
   with_dict: osxs_systemsetup
 
-- name: Configure OS X Server services
-  osx_serveradmin: name={{ item.key }} state={{ item.value.state }}
-  with_dict: osxs_serveradmin
+- name: Enable or disable OS X Server services
+  osx_serveradmin: name={{ item.name }} state={{ item.state }}
+  with_items: osxs_service_state
   tags: [ 'test' ]
 
 - name: Enable firewall

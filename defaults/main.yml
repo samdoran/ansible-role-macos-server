@@ -53,6 +53,6 @@ osxs_systemsetup:
     arg: "{{ osxs_servername }}"
 
 
-osxs_serveradmin:
-  caching:
-    arg: start
+osxs_service_state:
+  - name: caching
+    state: started
