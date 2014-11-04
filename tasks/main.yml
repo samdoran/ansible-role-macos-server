@@ -40,7 +40,7 @@
   when: osxs_loginbanner is defined
 
 - name: Make directory for ansible files
-  file: /etc/ansible state=directory owner=root group=wheel mode=0700
+  file: dest=/etc/ansible state=directory owner=root group=wheel mode=0700
   tags: test
 
 - name: Copy serveradmin settings file
@@ -50,5 +50,12 @@
     - reload services
   tags: test
 
-- name: Copy networksetup script
-  template: src=systemsetup.j2 dest={{ osxs_config_diroctory }}/networksetup
+- name: Copy systemsetup.sh script
+  template: src=systemsetup.sh.j2 dest={{ osxs_config_directory }}/systemsetup.sh owner=root group=wheel mode=0700
+  notify: run systemsetup.sh
+  tags: test
+
+- name: Copy networksetup.sh script
+  template: src=networksetup.sh.j2 dest={{ osxs_config_directory }}/networksetup.sh owner=root group=wheel mode=0700
+  notify: run networksetup.sh
+  tags: test

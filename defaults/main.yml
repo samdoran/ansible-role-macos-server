@@ -3,9 +3,18 @@ osxs_config_directory: /etc/ansible
 osxs_timeserver: time.apple.com
 osxs_hostname: osxs-1
 osxs_domain: royall.com
+osxs_fqdn: "{{ osxs_hostname}}.{{ osxs_domain }}"
 osxs_timezone: GMT
-osxs_dns_1: "172.16.1.22"
-osxs_dns_2: "172.16.1.13"
+osxs_network_service: "Ethernet 2"
+osxs_dns_servers:
+  - 172.16.1.22
+  - 172.16.1.13
+osxs_search_domains:
+  - royall
+  - royall.com
+  - hermanhq.com
+  - adm
+  - colo
 osxs_caching_path: "/Library/Server/Caching/Data"
 osxs_caching_port: 50289
 osxs_caching_limit: 156000000000

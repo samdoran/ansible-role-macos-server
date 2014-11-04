@@ -6,5 +6,8 @@
   shell: serveradmin stop {{ item }}; serveradmin start {{ item }}
   with_items: osxs_service_state.name
 
-- name: run networksetup
-  command: /etc/networksetup
+- name: run systemsetup.sh
+  command: "{{ osxs_config_directory }}/systemsetup.sh"
+
+- name: run networksetup.sh
+  command: "{{ osxs_config_directory }}/networksetup.sh"

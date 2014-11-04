@@ -116,8 +116,6 @@ caching:PublicRanges = _empty_array
 caching:LocalSubnetsOnly = no
 caching:DataPath = "{{ osxs_caching_path }}"
 caching:Port = {{ osxs_caching_port }}
-dns:forwarders:_array_index:0 = "{{ osxs_dns_1 }}"
-dns:forwarders:_array_index:1 = "{{ osxs_dns_2 }}"
 smb:NetBIOSName = "osxs-4"
 smb:ServerDescription = "osxs-4"
 dirserv:LDAPDefaultPrefix = "dc={{ osxs_hostname }},dc=royall,dc=com"
