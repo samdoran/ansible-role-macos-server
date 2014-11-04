@@ -13,14 +13,9 @@
   sudo: no
   with_items: osxs_packages
 
-- name: Setup system
-  command: /usr/sbin/systemsetup -set{{ item.key }} {{ item.value.arg }}
-  with_dict: osxs_systemsetup
-
 - name: Enable or disable OS X Server services
   osx_serveradmin: name={{ item.name }} state={{ item.state }}
   with_items: osxs_service_state
-  tags: [ 'test' ]
 
 - name: Enable firewall
   command: defaults write /Library/Preferences/com.apple.alf.plist globalstate -int 1
@@ -40,21 +35,17 @@
 
 - name: Make directory for ansible files
   file: dest=/etc/ansible state=directory owner=root group=wheel mode=0700
-  tags: test
 
 - name: Copy serveradmin settings file
   template: src=serveradmin_settings.j2 dest={{ osxs_config_directory}}/serveradmin_settings owner=root group=wheel mode=0600
   notify:
     - apply settings
     - reload services
-  tags: test
 
 - name: Copy systemsetup.sh script
   template: src=systemsetup.sh.j2 dest={{ osxs_config_directory }}/systemsetup.sh owner=root group=wheel mode=0700
   notify: run systemsetup.sh
-  tags: test
 
 - name: Copy networksetup.sh script
   template: src=networksetup.sh.j2 dest={{ osxs_config_directory }}/networksetup.sh owner=root group=wheel mode=0700
   notify: run networksetup.sh
-  tags: test
