@@ -1,6 +1,6 @@
 ---
 - name: apply settings
-  shell: serveradmin settings < /etc/serveradmin_settings
+  shell: serveradmin settings < {{ osxs_config_directory }}/serveradmin_settings
 
 - name: reload services
   shell: serveradmin stop {{ item }}; serveradmin start {{ item }}
