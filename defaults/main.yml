@@ -1,7 +1,14 @@
 ---
+osxs_config_directory: /etc/ansible
 osxs_timeserver: time.apple.com
-osxs_servername: osxs-1
+osxs_hostname: osxs-1
+osxs_domain: royall.com
 osxs_timezone: GMT
+osxs_dns_1: "172.16.1.22"
+osxs_dns_2: "172.16.1.13"
+osxs_caching_path: "/Library/Server/Caching/Data"
+osxs_caching_port: 50289
+osxs_caching_limit: 156000000000
 
 osxs_packages:
   - fish
