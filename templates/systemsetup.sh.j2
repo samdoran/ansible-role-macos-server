@@ -2,14 +2,14 @@
 # {{ ansible_managed }}
 
 systemsetup -setcomputername {{ osxs_servername }}
+systemsetup -setlocalsubnetname {{ osxs_fqdn }}
 systemsetup -settimezone {{ osxs_timezone }}
 systemsetup -setusingnetworktime on
 systemsetup -setnetworktimeserver {{ osxs_timeserver }}
-systemsetup -setcomputersleep Off
+systemsetup -setcomputersleep Never
 systemsetup -setdisplaysleep 15
 systemsetup -setharddisksleep Never
 systemsetup -setrestartpowerfailure on
 systemsetup -setallowpowerbuttontosleepcomputer off
 systemsetup -f -setremotelogin on
-systemsetup -setlocalsubnetname {{ osxs_fqdn }}
 systemsetup -setwaitforstartupafterpowerfailure 90
