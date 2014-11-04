@@ -1,7 +1,7 @@
 #!/bin/bash
 # {{ ansible_managed }}
 
-systemsetup -setcomputername {{ osxs_servername }}
+systemsetup -setcomputername {{ osxs_hostname }}
 systemsetup -setlocalsubnetname {{ osxs_fqdn }}
 systemsetup -settimezone {{ osxs_timezone }}
 systemsetup -setusingnetworktime on
