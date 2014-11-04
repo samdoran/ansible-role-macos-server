@@ -38,3 +38,17 @@
 - name: Set login banner
   osx_defaults: domain=/Library/Preferences/com.apple.loginwindow key=LoginwindowText type=string value="{{ osxs_loginbanner }}" state=present
   when: osxs_loginbanner is defined
+
+- name: Make directory for ansible files
+  file: /etc/ansible state=directory owner=root group=wheel mode=0700
+  tags: test
+
+- name: Copy serveradmin settings file
+  template: src=serveradmin_settings.j2 dest={{ osxs_config_directory}}/serveradmin_settings owner=root group=wheel mode=0600
+  notify:
+    - apply settings
+    - reload services
+  tags: test
+
+- name: Copy networksetup script
+  template: src=systemsetup.j2 dest={{ osxs_config_diroctory }}/networksetup
