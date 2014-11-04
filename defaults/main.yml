@@ -1,14 +1,14 @@
 ---
 osxs_config_directory: /etc/ansible
 osxs_timeserver: time.apple.com
-osxs_hostname: osxs-1
+osxs_hostname: osxs-17
 osxs_domain: royall.com
 osxs_fqdn: "{{ osxs_hostname}}.{{ osxs_domain }}"
 osxs_timezone: GMT
 osxs_network_service: "Ethernet 2"
 osxs_dns_servers:
-  - 172.16.1.22
-  - 172.16.1.13
+  - 192.168.104.4
+  - 192.168.104.5
 osxs_search_domains:
   - royall
   - royall.com
