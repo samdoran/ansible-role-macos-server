@@ -1,7 +1,7 @@
 ---
 osxs_config_directory: /etc/ansible
 osxs_timeserver: time.apple.com
-osxs_hostname: osxs-17
+osxs_hostname: osxs-1
 osxs_domain: royall.com
 osxs_fqdn: "{{ osxs_hostname}}.{{ osxs_domain }}"
 osxs_timezone: GMT
@@ -17,7 +17,7 @@ osxs_search_domains:
   - colo
 osxs_caching_path: "/Library/Server/Caching/Data"
 osxs_caching_port: 50289
-osxs_caching_limit: 156000000000
+osxs_caching_limit: 140000000000
 
 osxs_packages:
   - fish
@@ -30,44 +30,6 @@ osxs_packages:
   - watch
   - wget
   - git
-
-osxs_systemsetup:
-  timezone:
-    arg: "{{ osxs_timezone }}"
-
-  usingnetworktime:
-    arg: "on"
-
-  networktimeserver:
-    arg: "{{ osxs_timeserver }}"
-
-  computersleep:
-    arg: "Never"
-
-  displaysleep:
-    arg: 15
-
-  harddisksleep:
-    arg: "Never"
-
-  wakeonnetworkaccess:
-    arg: "on"
-
-  restartpowerfailure:
-    arg: "on"
-
-  allowpowerbuttontosleepcomputer:
-    arg: "off"
-
-  remotelogin:
-    arg: "on"
-
-  computername:
-    arg: "{{ osxs_servername }}"
-
-  localsubnetname:
-    arg: "{{ osxs_servername }}"
-
 
 osxs_service_state:
   - name: caching
