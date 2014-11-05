@@ -116,7 +116,3 @@ caching:PublicRanges = _empty_array
 caching:LocalSubnetsOnly = no
 caching:DataPath = "{{ osxs_caching_path }}"
 caching:Port = {{ osxs_caching_port }}
-smb:NetBIOSName = "{{ osxs_hostname }}"
-smb:ServerDescription = "{{ osxs_hostname }}"
-dirserv:LDAPDefaultPrefix = "dc={{ osxs_hostname }},dc=royall,dc=com"
-dirserv:defaultKerbRealmName = "{{ osxs_fqdn | upper }}"
