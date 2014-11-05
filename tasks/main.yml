@@ -49,3 +49,7 @@
 - name: Copy networksetup.sh script
   template: src=networksetup.sh.j2 dest={{ osxs_config_directory }}/networksetup.sh owner=root group=wheel mode=0700
   notify: run networksetup.sh
+
+- name: Set hostname
+  osx_changeip: name={{ osxs_fqdn }}
+  notify: reboot
