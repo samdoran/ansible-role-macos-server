@@ -3,7 +3,7 @@ osxs_config_directory: /etc/ansible
 osxs_timeserver: time.apple.com
 osxs_hostname: osxs-1
 osxs_domain: royall.com
-osxs_fqdn: "{{ osxs_hostname}}.{{ osxs_domain }}"
+osxs_fqdn: "{{ osxs_hostname }}.{{ osxs_domain }}"
 osxs_timezone: GMT
 osxs_network_service: "Ethernet 2"
 osxs_dns_servers:
