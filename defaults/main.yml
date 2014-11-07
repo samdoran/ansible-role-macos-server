@@ -40,3 +40,59 @@ osxs_packages:
 osxs_service_state:
   - name: caching
     state: started
+
+osxs_system_defaults:
+  - domain: /Library/Preferences/com.apple.alf
+    type: int
+    key: globalstate
+    value: 1
+
+  - domain: /Library/Preferences/com.apple.loginwindow
+    type: bool
+    key: SHOWFULLNAME
+    value: True
+    state: present
+
+  - domain: /Library/Preferences/com.apple.loginwindow
+    type: bool
+    key: PowerOffDisabled
+    value: True
+    state: present
+
+  - domain: /Library/Preferences/com.apple.loginwindow
+    type: string
+    key: LoginwindowText
+    value: "{{ osxs_loginbanner }}"
+    state: present
+
+osxs_user_defaults:
+
+  - domain: -g
+    type: string
+    key: AppleInterfaceStyle
+    value: Dark
+    state: present
+
+  - domain: com.apple.universalaccess
+    type: bool
+    key: reduceTransparency
+    value: True
+    state: present
+
+  - domain: -g
+    type: int
+    key: AppleAquaColorVariant
+    value: 6
+    state: present
+
+  - domain: -g
+    type: string
+    key: AppleHighlightColor
+    value: 0.847059 0.847059 0.862745
+    state: present
+
+  - domain: -g
+    type: bool
+    key: AppleICUForce24HourTime
+    value: True
+    state: present

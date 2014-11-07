@@ -17,8 +17,18 @@
   osx_serveradmin: name={{ item.name }} state={{ item.state }}
   with_items: osxs_service_state
 
-- name: Enable firewall
-  command: defaults write /Library/Preferences/com.apple.alf.plist globalstate -int 1
+- name: Set user defaults
+  # command: defaults write /Library/Preferences/com.apple.alf.plist globalstate -int 1
+  # osx_defaults: domain=/Library/Preferences/com.apple.alf.plist key=globalstate type=int value=1
+  osx_defaults: domain={{ item.domain }} key={{ item.key }} type={{ item.type }} value="{{ item.value }}"
+  sudo: no
+  with_items: osxs_user_defaults
+  tags: test
+
+- name: Set system
+  osx_defaults: domain={{ item.domain }} key={{ item.key }} type={{ item.type }} value="{{ item.value }}"
+  with_items: osxs_system_defaults
+  tags: test
 
 - name: Setup sudo for admin group
   lineinfile: "state=present backup=yes dest=/etc/sudoers regexp='^%admin' line='%admin  ALL=(ALL) NOPASSWD: ALL'"
@@ -28,10 +38,6 @@
 
 - name: Configure ssh
   template: backup=yes src=sshd_config.j2 dest=/etc/sshd_config owner=root group=wheel mode=0644
-
-- name: Set login banner
-  osx_defaults: 'domain=/Library/Preferences/com.apple.loginwindow key=LoginwindowText type=string value="{{ osxs_loginbanner }}" state=present'
-  when: osxs_loginbanner is defined
 
 - name: Make directory for ansible files
   file: dest=/etc/ansible state=directory owner=root group=wheel mode=0700
