@@ -53,7 +53,8 @@ def main():
     if not ip:
         ip = current_ip
 
-    cmd = "changeip %s %s %s %s" % (current_ip, ip, ansible_fqdn, name)
+    changeip_bin="/Applications/Server.app/Contents/ServerRoot/usr/sbin/changeip"
+    cmd = "%s %s %s %s %s" % (changeip_bin, current_ip, ip, ansible_fqdn, name)
     (rc, out, err) = module.run_command(cmd)
 
     if rc != 0:
