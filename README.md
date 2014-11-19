@@ -8,7 +8,6 @@ Requirements
 
 * SSH access to the server
 * `sudo` privileges
-* Command line developer tools installed
 * OS X Server application launched at least once
 
 Role Variables

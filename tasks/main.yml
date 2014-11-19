@@ -1,12 +1,38 @@
 ---
+- name: Check for Xcode Command Line Tools
+  stat: path=/Library/Developer/CommandLineTools
+  register: xcode_cl_tools
+  tags: [ 'osx' , 'xcode' ]
+
+- name: Login to continue
+  pause:
+    prompt="Login to complete the installation of the Xcode comamnd line tools. Press Enter when logged in"
+  when: not xcode_cl_tools.stat.exists
+  tags: [ 'osx' , 'xcode' ]
+
+- name: Install Xcode command line tools
+  command: xcode-select --install
+    creates=/Library/Developer/CommandLineTools
+  # register: xcode_cl_tools
+  tags: [ 'osx' , 'xcode' ]
+
+- name: Wait until command line tools are installed
+  wait_for:
+    path="/private/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress"
+    timeout=600
+    state=absent
+  tags: [ 'osx' , 'xcode' ]
+
 - name: Check if Homebrew is installed
   stat: path=/usr/local/bin/brew
   register: homebrew_check
+  tags: [ 'osx' , 'homebrew' ]
 
 - name: Install Homebrew
   shell: 'echo "\r" | ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
   sudo: no
   when: not homebrew_check.stat.exists
+  tags: [ 'osx' , 'homebrew' ]
 
 - name: Install packages
   homebrew:
@@ -16,14 +42,14 @@
     state=latest
   sudo: no
   with_items: osxs_packages
+  tags: [ 'osx' , 'homebrew', 'packages' ]
 
 - name: Enable or disable OS X Server services
   osx_serveradmin: name={{ item.name }} state={{ item.state }}
   with_items: osxs_service_state
+  tags: [ 'osx' , 'services' ]
 
 - name: Set user defaults
-  # command: defaults write /Library/Preferences/com.apple.alf.plist globalstate -int 1
-  # osx_defaults: domain=/Library/Preferences/com.apple.alf.plist key=globalstate type=int value=1
   osx_defaults:
     domain={{ item.domain }}
     key={{ item.key }}
@@ -32,8 +58,9 @@
   sudo: no
   with_items: osxs_user_defaults
   tags: test
+  tags: [ 'osx' , 'defaults' ]
 
-- name: Set system
+- name: Set system defaults
   osx_defaults:
     domain={{ item.domain }}
     key={{ item.key }}
@@ -41,6 +68,7 @@
     value="{{ item.value }}"
   with_items: osxs_system_defaults
   tags: test
+  tags: [ 'osx' , 'defaults' ]
 
 - name: Setup sudo for admin group
   lineinfile: >
@@ -49,6 +77,7 @@
     dest=/etc/sudoers
     regexp='^%admin'
     line='%admin ALL=(ALL) NOPASSWD: ALL'
+  tags: [ 'osx' , 'sudo' ]
 
 - name: Copy /etc/issue
   copy:
@@ -57,6 +86,8 @@
     owner=root
     group=wheel
     mode=0644
+  tags: [ 'osx' , 'ssh' ]
+
 
 - name: Configure ssh
   template:
@@ -66,6 +97,7 @@
     owner=root
     group=wheel
     mode=0644
+  tags: [ 'osx' , 'ssh' ]
 
 - name: Make directory for ansible files
   file:
@@ -74,6 +106,7 @@
     owner=root
     group=wheel
     mode=0700
+  tags: [ 'osx' , 'osxconfig' ]
 
 - name: Copy serveradmin settings file
   template:
@@ -85,6 +118,7 @@
   notify:
     - apply settings
     - reload services
+  tags: [ 'osx' , 'osxconfig' ]
 
 - name: Copy systemsetup.sh script
   template:
@@ -94,6 +128,7 @@
     group=wheel
     mode=0700
   notify: run systemsetup.sh
+  tags: [ 'osx' , 'osxconfig' ]
 
 - name: Copy networksetup.sh script
   template:
@@ -103,7 +138,9 @@
     group=wheel
     mode=0700
   notify: run networksetup.sh
+  tags: [ 'osx' , 'osxconfig' ]
 
 - name: Set hostname
   osx_changeip: name={{ osxs_fqdn }}
   notify: reboot
+  tags: [ 'osx' , 'osxconfig' ]
