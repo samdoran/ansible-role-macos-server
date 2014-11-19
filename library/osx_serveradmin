@@ -50,9 +50,10 @@ def main():
     # command line tool
     states = {"started": "start", "stopped": "stop"}
     state_out = {"started": "RUNNING", "stopped": "STOPPED"}
+    serveradmin_bin="/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin"
 
     # Check status
-    cmd = "serveradmin status %s" % (name)
+    cmd = "%s status %s" % (serveradmin_bin, name)
     (rc, out, err) = module.run_command(cmd)
     if rc != 0:
         module.fail_json(msg=err, rc=rc, cmd=cmd, out=out)
@@ -61,7 +62,7 @@ def main():
     if state_out[state] in out:
         module.exit_json(changed=False)
 
-    cmd = "serveradmin %s %s" % (states[state], name)
+    cmd = "%s %s %s" % (serveradmin_bin, states[state], name)
     (rc, out, err) = module.run_command(cmd)
 
     if rc != 0:
@@ -72,13 +73,13 @@ def main():
     # Pass service settings to the command
 
     # Check the setting to see if it needs to be changed
-    cmd = "serveradmin settings %s:%s:" % (name, setting_key)
+    cmd = "%s settings %s:%s:" % (serveradmin_bin, name, setting_key)
     (rc, out, err) = module.run_command(cmd)
 
     if rc != 0:
         module.fail_json(msg=err, rc=rc, cmd=cmd, out=out)
     else:
-        cmd = "serveradmin settings %s:%s = %s" % (name, setting_key, setting_value)
+        cmd = "%s settings %s:%s = %s" % (serveradmin_bin, name, setting_key, setting_value)
         (rc, out, err) = module.run_command(cmd)
         module.exit_json(changed=True)
 
