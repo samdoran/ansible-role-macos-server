@@ -1,0 +1,67 @@
+#!/usr/bin/python
+
+DOCUMENTATION = '''
+---
+module: osx_changeip
+version_added: "1.8"
+short_description: Change hostname and IP of OS X Server
+description:
+'''
+
+EXAMPLES = '''
+
+'''
+
+import socket
+
+def main():
+
+    module = AnsibleModule (
+        argument_spec = dict (
+            name = dict(required=True, type='str'),
+            ip = dict(required=False, type='str')
+        ),
+        supports_check_mode = True
+    )
+
+    name = module.params['name']
+    ip = module.params['ip']
+
+
+    # Get the IP address
+    rc, out, err = module.run_command(["/sbin/ifconfig" , "-a"])
+
+    for line in out.split('\n'):
+
+        if line:
+            words = line.split()
+
+            if words[0] == 'inet':
+
+                if not words[1].startswith('127'):
+                    current_ip = words[1]
+
+    # Get the hostname
+    ansible_fqdn = socket.getfqdn()
+
+
+    # Idempotent logic
+    if ansible_fqdn == name:
+        module.exit_json(changed=False)
+
+    # If the ip parameter was not specified, set it to the current IP.
+    if not ip:
+        ip = current_ip
+
+    changeip_bin="/Applications/Server.app/Contents/ServerRoot/usr/sbin/changeip"
+    cmd = "%s %s %s %s %s" % (changeip_bin, current_ip, ip, ansible_fqdn, name)
+    (rc, out, err) = module.run_command(cmd)
+
+    if rc != 0:
+        module.fail_json(msg=err, rc=rc, cmd=cmd, error=out)
+    else:
+        module.exit_json(changed=True)
+
+# import module snippets
+from ansible.module_utils.basic import *
+main()

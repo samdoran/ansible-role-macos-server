@@ -8,18 +8,25 @@ Requirements
 
 * SSH access to the server
 * `sudo` privileges
+* OS X Server application launched at least once
 
 Role Variables
 --------------
-**osxs_servername**     Name of the server (not FQDN).
+**osxs_config_directory**   Where script templates will be copied (Default:/etc/ansible)
+
+**osxs_hostname**       Name of the server minus domain (not FQDN).
+
+**osxs_domain**         Domain
+
+**osxs_loginbanner**    Text displayed on login screen.
+
+**osxs_network_service**    Named service used for network connectivity. This determines where the IP, DNS, and hostname will be set. You can find available network services by running `networksetup -listallnetworkservices`.
 
 **osxs_timeserver**     FQDN of time server.
 
 **osxs_timezone**       Timezone of time server (Default: GMT)
 
-**osxs_systemsetup**    Hash of commands and parameters sent to `systemsetup` command.
-
-**osxs_serveradmin**    Hash of commands sent to `serveradmin` command.
+**osxs_service_state**  Service names and there status that will be passed to `serveradmin`.
 
 **osxs_packages**       List of packages to be installed with Homebrew.
 

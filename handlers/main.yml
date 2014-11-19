@@ -1,3 +1,16 @@
 ---
-- name: restart ssh
-  shell: launchctl stop com.openssh.sshd ; launchctl start com.openssh.sshd
+- name: apply settings
+  shell: serveradmin settings < {{ osxs_config_directory }}/serveradmin_settings
+
+- name: reload services
+  shell: serveradmin stop {{ item }}; serveradmin start {{ item }}
+  with_items: osxs_service_state.name
+
+- name: run systemsetup.sh
+  command: "{{ osxs_config_directory }}/systemsetup.sh"
+
+- name: run networksetup.sh
+  command: "{{ osxs_config_directory }}/networksetup.sh"
+
+- name: reboot
+  command: shutdown -r now

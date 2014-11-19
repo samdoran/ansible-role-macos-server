@@ -1,7 +1,29 @@
 ---
+osxs_config_directory: /etc/ansible
+osxs_hostname: osxs-1
+osxs_domain: royall.com
+osxs_fqdn: "{{ osxs_hostname }}.{{ osxs_domain }}"
+
 osxs_timeserver: time.apple.com
-osxs_servername: osxs-1
 osxs_timezone: GMT
+
+osxs_loginbanner: "You are accessing a Royall & Company Information System that is provided for authorized use only. By using this IS, which includes any device attached to this IS, you consent to interception and monitoring communications on this IS for purposes including, but not limited to, penetration testing, comsec monitoring, network operations and defense, personnel misconduct, law enforcement, and counterintelligence investigations.\n\nAt any time, Royall & Company may inspect & seize data stored on this IS.\n\nCommunications using, or data stored on, this IS are not private, are subject to routine monitoring, interception, and search, and may be disclosed or used for any Royall & Company authorized purpose.\n"
+
+osxs_network_service: "Ethernet 2"
+osxs_dns_servers:
+  - 192.168.104.4
+  - 192.168.104.5
+
+osxs_search_domains:
+  - royall
+  - royall.com
+  - hermanhq.com
+  - adm
+  - colo
+
+osxs_caching_path: "/Library/Server/Caching/Data"
+osxs_caching_port: 50289
+osxs_caching_limit: 140000000000
 
 osxs_packages:
   - fish
@@ -10,48 +32,67 @@ osxs_packages:
   - iperf
   - nmap
   - ssh-copy-id
+  - tmux
   - watch
   - wget
   - git
 
-osxs_systemsetup:
-  timezone:
-    arg: "{{ osxs_timezone }}"
+osxs_service_state:
+  - name: caching
+    state: started
 
-  usingnetworktime:
-    arg: "on"
+osxs_system_defaults:
+  - domain: /Library/Preferences/com.apple.alf
+    type: int
+    key: globalstate
+    value: 1
 
-  networktimeserver:
-    arg: "{{ osxs_timeserver }}"
+  - domain: /Library/Preferences/com.apple.loginwindow
+    type: bool
+    key: SHOWFULLNAME
+    value: True
+    state: present
 
-  computersleep:
-    arg: "Never"
+  - domain: /Library/Preferences/com.apple.loginwindow
+    type: bool
+    key: PowerOffDisabled
+    value: True
+    state: present
 
-  displaysleep:
-    arg: 15
+  - domain: /Library/Preferences/com.apple.loginwindow
+    type: string
+    key: LoginwindowText
+    value: "{{ osxs_loginbanner }}"
+    state: present
 
-  harddisksleep:
-    arg: "Never"
+osxs_user_defaults:
 
-  wakeonnetworkaccess:
-    arg: "on"
+  - domain: -g
+    type: string
+    key: AppleInterfaceStyle
+    value: Dark
+    state: present
 
-  restartpowerfailure:
-    arg: "on"
+  - domain: com.apple.universalaccess
+    type: bool
+    key: reduceTransparency
+    value: True
+    state: present
 
-  allowpowerbuttontosleepcomputer:
-    arg: "off"
+  - domain: -g
+    type: int
+    key: AppleAquaColorVariant
+    value: 6
+    state: present
 
-  remotelogin:
-    arg: "on"
+  - domain: -g
+    type: string
+    key: AppleHighlightColor
+    value: 0.847059 0.847059 0.862745
+    state: present
 
-  computername:
-    arg: "{{ osxs_servername }}"
-
-  localsubnetname:
-    arg: "{{ osxs_servername }}"
-
-
-osxs_serveradmin:
-  caching:
-    arg: start
+  - domain: -g
+    type: bool
+    key: AppleICUForce24HourTime
+    value: True
+    state: present
