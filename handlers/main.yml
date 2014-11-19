@@ -13,4 +13,4 @@
   command: "{{ osxs_config_directory }}/networksetup.sh"
 
 - name: reboot
-  command: shutdown -r +1
+  command: shutdown -r now
