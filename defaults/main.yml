@@ -41,6 +41,9 @@ osxs_service_state:
   - name: caching
     state: started
 
+  - name: netboot
+    state: started
+
 osxs_system_defaults:
   - domain: /Library/Preferences/com.apple.alf
     type: int
