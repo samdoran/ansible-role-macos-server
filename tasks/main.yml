@@ -144,3 +144,5 @@
   osx_changeip: name={{ osxs_fqdn }}
   notify: reboot
   tags: [ 'osx' , 'osxconfig' ]
+
+- { include: extras.yml, tags: [ 'osx' , 'osxextras' ] }

@@ -1,0 +1,33 @@
+---
+# Extra tools for OS X deployment and management
+- debug: msg={{ item }}
+  tags: debug
+  with_fileglob:
+    - 'Utilities/*'
+
+- name: Copy extra directories
+  copy:
+    src={{ item }}
+    dest={{ osxs_extra_files_dir }}
+    owner={{ ansible_env.SUDO_USER }}
+    # group=wheel
+    # mode=0755
+  with_items:
+    - Packages
+    - Scripts
+
+- name: Copy extra applications to /Applications/Utilities
+  copy:
+    src=Utilities/{{ item }}
+    dest=/Applications/Utilities/
+  with_items:
+    - AutoDMG.app
+    - CreateUserPkg.app
+
+- name: Install extra appliactions
+  command: >
+    installer -pkg {{ item.0 }} -target /
+    creates={{ item.1 }}
+  with_together:
+    - [ '{{ osxs_extra_files_dir }}/Packages/Packages.pkg' ]
+    - [ '/Applications/Packages.app' ]
