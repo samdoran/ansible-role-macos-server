@@ -1,4 +1,5 @@
 ---
+osxs_extra_files_dir: "/Users/Shared/"
 osxs_config_directory: /etc/ansible
 osxs_hostname: osxs-1
 osxs_domain: royall.com
@@ -9,7 +10,7 @@ osxs_timezone: GMT
 
 osxs_loginbanner: "You are accessing a Royall & Company Information System that is provided for authorized use only. By using this IS, which includes any device attached to this IS, you consent to interception and monitoring communications on this IS for purposes including, but not limited to, penetration testing, comsec monitoring, network operations and defense, personnel misconduct, law enforcement, and counterintelligence investigations.\n\nAt any time, Royall & Company may inspect & seize data stored on this IS.\n\nCommunications using, or data stored on, this IS are not private, are subject to routine monitoring, interception, and search, and may be disclosed or used for any Royall & Company authorized purpose.\n"
 
-osxs_network_service: "Ethernet 2"
+osxs_network_service: "Ethernet 1"
 osxs_dns_servers:
   - 192.168.104.4
   - 192.168.104.5
