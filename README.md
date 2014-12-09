@@ -12,6 +12,8 @@ Requirements
 
 Role Variables
 --------------
+**osxs_extra_files_dir**    Path where extra files are copied (Default: "/Users/Shared/")
+
 **osxs_config_directory**   Where script templates will be copied (Default:/etc/ansible)
 
 **osxs_hostname**       Name of the server minus domain (not FQDN).
