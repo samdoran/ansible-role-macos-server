@@ -1,6 +1,6 @@
 #!/bin/bash
 # {{ ansible_managed }}
 
-networksetup -setdnsservers "{{ osxs_network_service }}" {% for item in osxs_dns_servers %}{{ item }} {% endfor %}
+networksetup -setdnsservers "{{ macos_srvr_network_service }}" {% for item in macos_srvr_dns_servers %}{{ item }} {% endfor %}
 
-networksetup -setsearchdomains "{{ osxs_network_service }}" {% for item in osxs_search_domains %}{{ item }} {% endfor %}
+networksetup -setsearchdomains "{{ macos_srvr_network_service }}" {% for item in macos_srvr_search_domains %}{{ item }} {% endfor %}

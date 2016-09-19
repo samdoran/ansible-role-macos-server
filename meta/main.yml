@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Sam Doran
-  description: Provision OS X Server
+  description: Provision macOS Server
   company:
   license: MIT
   min_ansible_version: 1.9

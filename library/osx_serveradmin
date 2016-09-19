@@ -4,9 +4,9 @@ DOCUMENTATION = '''
 ---
 module: osx_serveradmin
 version_added: "1.8"
-short_description: Manage OS X Server processes
+short_description: Manage macOS Server processes
 description:
-    - Manage OS X Server processes and settings.
+    - Manage macOS Server processes and settings.
 options:
     name:
         required: true
@@ -15,7 +15,7 @@ options:
     state:
         required: false
         description:
-            - Optionally start/enabled or stop/disable the service. OS X does
+            - Optionally start/enabled or stop/disable the service. macOS does
               have separate settings for enabling and starting/stopping.
         choices: [ "started", "stopped" ]
     setting_key:

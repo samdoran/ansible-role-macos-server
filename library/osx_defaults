@@ -21,9 +21,9 @@
 DOCUMENTATION = '''
 ---
 module: osx_defaults
-short_description: Access the Mac OS X user defaults system
+short_description: Access the Mac macOS user defaults system
 description:
-  - Read, write, or delete Mac OS X user defaults.
+  - Read, write, or delete Mac macOS user defaults.
 version_added: 1.8
 author: Hiroaki Nakamura
 options:
@@ -64,11 +64,11 @@ description: Hide hidden files (whose name starts with dot) in Finder
 - osx_defaults: domain=com.apple.finder key=AppleShowAllFiles sttate=absent
   notify: killall Finder
 
-description: configure a Mac OS X user account so that .DS_Store files are not created when interacting with a remote file server using the Finder
+description: configure a Mac macOS user account so that .DS_Store files are not created when interacting with a remote file server using the Finder
 - osx_defaults: domain=com.apple.desktopservices key=DSDontWriteNetworkStores type=string value=true state=present
   notify: killall Finder
 
-description: configure a Mac OS X user account so that .DS_Store files are created when interacting with a remote file server using the Finder
+description: configure a Mac macOS user account so that .DS_Store files are created when interacting with a remote file server using the Finder
 - osx_defaults: domain=com.apple.desktopservices key=DSDontWriteNetworkStores state=absent
   notify: killall Finder
 

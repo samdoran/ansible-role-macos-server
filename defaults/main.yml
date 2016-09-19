@@ -1,32 +1,31 @@
----
-osxs_extra_files_dir: "/Users/Shared/"
-osxs_config_directory: /etc/ansible
-osxs_hostname: osxs-1
-osxs_domain: royall.com
-osxs_fqdn: "{{ osxs_hostname }}.{{ osxs_domain }}"
+macos_srvr_extra_files_dir: "/Users/Shared/"
+macos_srvr_config_directory: /etc/ansible
+macos_srvr_hostname: macos_srvr-1
+macos_srvr_domain: royall.com
+macos_srvr_fqdn: "{{ macos_srvr_hostname }}.{{ macos_srvr_domain }}"
 
-osxs_timeserver: time.apple.com
-osxs_timezone: GMT
+macos_srvr_timeserver: time.apple.com
+macos_srvr_timezone: GMT
 
-osxs_loginbanner: "You are accessing a Royall & Company Information System that is provided for authorized use only. By using this IS, which includes any device attached to this IS, you consent to interception and monitoring communications on this IS for purposes including, but not limited to, penetration testing, comsec monitoring, network operations and defense, personnel misconduct, law enforcement, and counterintelligence investigations.\n\nAt any time, Royall & Company may inspect & seize data stored on this IS.\n\nCommunications using, or data stored on, this IS are not private, are subject to routine monitoring, interception, and search, and may be disclosed or used for any Royall & Company authorized purpose.\n"
+macos_srvr_loginbanner: "You are accessing a Royall & Company Information System that is provided for authorized use only. By using this IS, which includes any device attached to this IS, you consent to interception and monitoring communications on this IS for purposes including, but not limited to, penetration testing, comsec monitoring, network operations and defense, personnel misconduct, law enforcement, and counterintelligence investigations.\n\nAt any time, Royall & Company may inspect & seize data stored on this IS.\n\nCommunications using, or data stored on, this IS are not private, are subject to routine monitoring, interception, and search, and may be disclosed or used for any Royall & Company authorized purpose.\n"
 
-osxs_network_service: "Ethernet 1"
-osxs_dns_servers:
+macos_srvr_network_service: "Ethernet 1"
+macos_srvr_dns_servers:
   - 192.168.104.4
   - 192.168.104.5
 
-osxs_search_domains:
+macos_srvr_search_domains:
   - royall
   - royall.com
   - hermanhq.com
   - adm
   - colo
 
-osxs_caching_path: "/Library/Server/Caching/Data"
-osxs_caching_port: 50289
-osxs_caching_limit: 140000000000
+macos_srvr_caching_path: "/Library/Server/Caching/Data"
+macos_srvr_caching_port: 50289
+macos_srvr_caching_limit: 140000000000
 
-osxs_packages:
+macos_srvr_packages:
   - fish
   - htop
   - coreutils
@@ -38,14 +37,14 @@ osxs_packages:
   - wget
   - git
 
-osxs_service_state:
+macos_srvr_service_state:
   - name: caching
     state: started
 
   - name: netboot
     state: started
 
-osxs_system_defaults:
+macos_srvr_system_defaults:
   - domain: /Library/Preferences/com.apple.alf
     type: int
     key: globalstate
@@ -66,10 +65,10 @@ osxs_system_defaults:
   - domain: /Library/Preferences/com.apple.loginwindow
     type: string
     key: LoginwindowText
-    value: "{{ osxs_loginbanner }}"
+    value: "{{ macos_srvr_loginbanner }}"
     state: present
 
-osxs_user_defaults:
+macos_srvr_user_defaults:
 
   - domain: -g
     type: string

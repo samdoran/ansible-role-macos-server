@@ -41,12 +41,12 @@
     name={{ item }}
     state=latest
   sudo: no
-  with_items: osxs_packages
+  with_items: macos_srvr_packages
   tags: [ 'osx' , 'homebrew', 'packages' ]
 
-- name: Enable or disable OS X Server services
+- name: Enable or disable macOS Server services
   osx_serveradmin: name={{ item.name }} state={{ item.state }}
-  with_items: osxs_service_state
+  with_items: macos_srvr_service_state
   tags: [ 'osx' , 'services' ]
 
 - name: Set user defaults
@@ -56,7 +56,7 @@
     type={{ item.type }}
     value="{{ item.value }}"
   sudo: no
-  with_items: osxs_user_defaults
+  with_items: macos_srvr_user_defaults
   tags: test
   tags: [ 'osx' , 'defaults' ]
 
@@ -66,7 +66,7 @@
     key={{ item.key }}
     type={{ item.type }}
     value="{{ item.value }}"
-  with_items: osxs_system_defaults
+  with_items: macos_srvr_system_defaults
   tags: test
   tags: [ 'osx' , 'defaults' ]
 
@@ -111,7 +111,7 @@
 - name: Copy serveradmin settings file
   template:
     src=serveradmin_settings.j2
-    dest={{ osxs_config_directory}}/serveradmin_settings
+    dest={{ macos_srvr_config_directory}}/serveradmin_settings
     owner=root
     group=wheel
     mode=0600
@@ -123,7 +123,7 @@
 - name: Copy systemsetup.sh script
   template:
     src=systemsetup.sh.j2
-    dest={{ osxs_config_directory }}/systemsetup.sh
+    dest={{ macos_srvr_config_directory }}/systemsetup.sh
     owner=root
     group=wheel
     mode=0700
@@ -133,7 +133,7 @@
 - name: Copy networksetup.sh script
   template:
     src=networksetup.sh.j2
-    dest={{ osxs_config_directory }}/networksetup.sh
+    dest={{ macos_srvr_config_directory }}/networksetup.sh
     owner=root
     group=wheel
     mode=0700
@@ -141,7 +141,7 @@
   tags: [ 'osx' , 'osxconfig' ]
 
 - name: Set hostname
-  osx_changeip: name={{ osxs_fqdn }}
+  osx_changeip: name={{ macos_srvr_fqdn }}
   notify: reboot
   tags: [ 'osx' , 'osxconfig' ]
 

@@ -1,17 +1,17 @@
 ---
 - name: apply settings
-  shell: serveradmin settings < {{ osxs_config_directory }}/serveradmin_settings
+  shell: serveradmin settings < {{ macos_srvr_config_directory }}/serveradmin_settings
 
 - name: reload services
   shell: serveradmin stop {{ item.name }}; serveradmin start {{ item.name }}
-  with_items: osxs_service_state
+  with_items: macos_srvr_service_state
   when: item.state != 'stopped'
 
 - name: run systemsetup.sh
-  command: "{{ osxs_config_directory }}/systemsetup.sh"
+  command: "{{ macos_srvr_config_directory }}/systemsetup.sh"
 
 - name: run networksetup.sh
-  command: "{{ osxs_config_directory }}/networksetup.sh"
+  command: "{{ macos_srvr_config_directory }}/networksetup.sh"
 
 - name: reboot
   command: shutdown -r now

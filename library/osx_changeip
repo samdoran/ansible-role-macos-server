@@ -4,7 +4,7 @@ DOCUMENTATION = '''
 ---
 module: osx_changeip
 version_added: "1.8"
-short_description: Change hostname and IP of OS X Server
+short_description: Change hostname and IP of macOS Server
 description:
 '''
 

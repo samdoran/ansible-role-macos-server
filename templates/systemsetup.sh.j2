@@ -1,11 +1,11 @@
 #!/bin/bash
 # {{ ansible_managed }}
 
-systemsetup -setcomputername {{ osxs_hostname }}
-systemsetup -setlocalsubnetname {{ osxs_fqdn }}
-systemsetup -settimezone {{ osxs_timezone }}
+systemsetup -setcomputername {{ macos_srvr_hostname }}
+systemsetup -setlocalsubnetname {{ macos_srvr_fqdn }}
+systemsetup -settimezone {{ macos_srvr_timezone }}
 systemsetup -setusingnetworktime on
-systemsetup -setnetworktimeserver {{ osxs_timeserver }}
+systemsetup -setnetworktimeserver {{ macos_srvr_timeserver }}
 systemsetup -setcomputersleep Never
 systemsetup -setdisplaysleep 15
 systemsetup -setharddisksleep Never
