@@ -42,7 +42,7 @@ Example Playbook
 ----------------
 
     - name: macOS Server
-      hosts: osx_server
+      hosts: macos_server
       sudo: yes
 
       vars:
